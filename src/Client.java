@@ -6,7 +6,7 @@ public class Client {
         
         if (args.length != 2) {
             System.err.println(
-                "Usage: java EchoClient <host name> <port number>");
+                "Example: java Client <host name> <port number>");
             System.exit(1);
         }
 
@@ -14,10 +14,10 @@ public class Client {
         int portNumber = Integer.parseInt(args[1]);
 
         try (
-            Socket kkSocket = new Socket(hostName, portNumber);
-            PrintWriter out = new PrintWriter(kkSocket.getOutputStream(), true);
+            Socket mySocket = new Socket(hostName, portNumber);
+            PrintWriter out = new PrintWriter(mySocket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(
-                new InputStreamReader(kkSocket.getInputStream()));
+                new InputStreamReader(mySocket.getInputStream()));
         ) {
             BufferedReader stdIn =
                 new BufferedReader(new InputStreamReader(System.in));
@@ -26,7 +26,7 @@ public class Client {
 
             while ((fromServer = in.readLine()) != null) {
                 System.out.println("Server: " + fromServer);
-                if (fromServer.equals("Bye."))
+                if (fromServer.equals("Adios."))
                     break;
                 
                 fromUser = stdIn.readLine();
@@ -36,10 +36,10 @@ public class Client {
                 }
             }
         } catch (UnknownHostException e) {
-            System.err.println("Don't know about host " + hostName);
+            System.err.println("Unknown host " + hostName);
             System.exit(1);
         } catch (IOException e) {
-            System.err.println("Couldn't get I/O for the connection to " +
+            System.err.println("Unable to connect to " +
                 hostName);
             System.exit(1);
         }

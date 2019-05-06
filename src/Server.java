@@ -5,7 +5,7 @@ public class Server {
     public static void main(String[] args) throws IOException {
         
         if (args.length != 1) {
-            System.err.println("Usage: java KnockKnockServer <port number>");
+            System.err.println("Usage: java Server <port number>");
             System.exit(1);
         }
 
@@ -23,14 +23,14 @@ public class Server {
             String inputLine, outputLine;
             
             // Initiate conversation with client
-            Protocol kkp = new Protocol();
-            outputLine = kkp.processInput(null);
+            Protocol myP = new Protocol();
+            outputLine = myP.processInput(null);
             out.println(outputLine);
 
             while ((inputLine = in.readLine()) != null) {
-                outputLine = kkp.processInput(inputLine);
+                outputLine = myP.processInput(inputLine);
                 out.println(outputLine);
-                if (outputLine.equals("Bye."))
+                if (outputLine.equals("Adios."))
                     break;
             }
         } catch (IOException e) {

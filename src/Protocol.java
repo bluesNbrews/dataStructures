@@ -2,58 +2,35 @@ import java.net.*;
 import java.io.*;
 
 public class Protocol {
-    private static final int WAITING = 0;
-    private static final int SENTKNOCKKNOCK = 1;
-    private static final int SENTCLUE = 2;
-    private static final int ANOTHER = 3;
 
-    private static final int NUMJOKES = 5;
+	private static final int WAITING = 0;
+    private static final int SENTGREETING = 1;
+    private static final int ANOTHER = 2;
 
     private int state = WAITING;
-    private int currentJoke = 0;
 
-    private String[] clues = { "Turnip", "Little Old Lady", "Atch", "Who", "Who" };
-    private String[] answers = { "Turnip the heat, it's cold in here!",
-                                 "I didn't know you could yodel!",
-                                 "Bless you!",
-                                 "Is there an owl in here?",
-                                 "Is there an echo in here?" };
-
+    private String[] names = { "John Jackson", "Abby Kelly"};
+    
     public String processInput(String theInput) {
         String theOutput = null;
 
         if (state == WAITING) {
-            theOutput = "Knock! Knock!";
-            state = SENTKNOCKKNOCK;
-        } else if (state == SENTKNOCKKNOCK) {
-            if (theInput.equalsIgnoreCase("Who's there?")) {
-                theOutput = clues[currentJoke];
-                state = SENTCLUE;
-            } else {
-                theOutput = "You're supposed to say \"Who's there?\"! " +
-			    "Try again. Knock! Knock!";
-            }
-        } else if (state == SENTCLUE) {
-            if (theInput.equalsIgnoreCase(clues[currentJoke] + " who?")) {
-                theOutput = answers[currentJoke] + " Want another? (y/n)";
+            theOutput = "Welcome To Talent Bot! Please enter a skill to search for. ";
+            state = SENTGREETING;
+        } else if (state == SENTGREETING) {
+        	if (theInput.equalsIgnoreCase("Find C++")) {
+                theOutput = "The following people have that skill: " + names[0] + " and " + names[1] + ". Try again? (y/n)";
                 state = ANOTHER;
             } else {
-                theOutput = "You're supposed to say \"" + 
-			    clues[currentJoke] + 
-			    " who?\"" + 
-			    "! Try again. Knock! Knock!";
-                state = SENTKNOCKKNOCK;
+                theOutput = "You're supposed to say \"Find C++\"! " +
+			    "Try again. Welcome To Talent Bot.";
             }
         } else if (state == ANOTHER) {
             if (theInput.equalsIgnoreCase("y")) {
-                theOutput = "Knock! Knock!";
-                if (currentJoke == (NUMJOKES - 1))
-                    currentJoke = 0;
-                else
-                    currentJoke++;
-                state = SENTKNOCKKNOCK;
+                theOutput = "Welcome To Talent Bot! Please enter a skill to search for. ";
+                state = SENTGREETING;
             } else {
-                theOutput = "Bye.";
+                theOutput = "Adios.";
                 state = WAITING;
             }
         }
